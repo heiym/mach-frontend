@@ -5,6 +5,7 @@
 *.*.swp
 yarn.lock
 plan.md 
+.yarn
 
 /.pnp
 .pnp.js
