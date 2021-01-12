@@ -1,11 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
+import { useLocation } from 'react-router-dom';
 import fetch from 'node-fetch';
 import List from './List.js';
 import CreateNewList from './CreateNewList';
 import TopLists from './TopLists.js';
 
+const listReducer = (list, action) => {
+  switch(action.type) {
+    case 'INIT': 
+      return action.lists;
+    case 'ADD_LIST':
+      return list.push(action.newList);
+    //TODO: implement
+    case 'DELETE_LIST':
+      return list.filter( list => list.id !== action.list.list_id );
+  }
+}
+
 const Lists = (props) => {
-  const [lists, setLists] = useState([]);
+  const [lists, dispatch] = useReducer(listReducer, []);
+  const listId = parseInt(useLocation().pathname.slice(1));
 
   useEffect(() => {
     const getLists = async () => {
@@ -17,7 +31,7 @@ const Lists = (props) => {
       });
 
       let lists = await response.json();
-      setLists(lists);
+      dispatch({ type:'INIT', lists: lists });
     };
 
     getLists();
@@ -35,8 +49,10 @@ const Lists = (props) => {
     });
 
     const newList = await response.json();
-    setLists([ ...lists, ...newList ]);
+    dispatch({ type:'ADD_LIST', newList: newList });
   }
+
+  const handleDeleteList = async (listId) => {}
 
   return (
     <div className="list-container">
@@ -44,7 +60,7 @@ const Lists = (props) => {
         handleNewList={ handleNewList }
       />
       <TopLists />
-      <div className="all-lists">
+      <div className="user-list-container">
         <ul className="list-of-lists">
           {
             lists.map(list => {
@@ -52,6 +68,7 @@ const Lists = (props) => {
                 <List
                   key={list.list_id}
                   list={list}
+                  activeList={ listId === list.list_id }
                 />
               );
             })

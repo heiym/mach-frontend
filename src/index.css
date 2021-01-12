@@ -1,70 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+
+:root {
+  --red-1: #993955;
+  --red-2: #990033;
+  --blue-1: #2978A0;
+  --blue-2: #52489C;
+  --yellow-1: #ffd000;
+  --yellow-2: #CFA24A;
+  --green-1: #15616D;
+  --green-2: #2F9C95;
+  --pear: #CFD11A;
+  --plum: #8f3985;
+  --plum-2: #A24ACF;
+  --dark-primary: #0c0c0c;
+  --light: #fdfdfd;
+  --light-grey: #f5f5f5;
+  --grey: #e0e0e0;
+  --dark-grey: #999999;
+  --darker-grey: #696969;
+  --even-darker-grey: #494949;
+  --background-primary: #333E4B;
+}
+
 html {
   box-sizing: border-box;
-  font-size: 86%;
-  color: #0c0c0c;
+  min-height: 100%;
+  font-size: 65%;
+  color: var(--dark-primary)
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Barlow', 'Arial', sans-serif;
+  font-weight: 500;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100%;
 }
 
 *, *:before, *:after {
   box-sizing: inherit;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 a {
-  color: #0c0c0c;
+  color: inherit;
   text-decoration: none;
 }
 
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+.bg-white {
+  background-color: var(--light);
+}
+
+.active {
+  background-color: var(--light);
+  font-weight: bold;
+}
+
 #root {
-  height: 100%;
+  min-height: 100%;
 }
 
 .app {
   display: grid;
-  grid-template-columns: 15% 1fr;
-  height: 100%;
-  background-color: #fdfdfd;
+  grid-template-columns: minmax(250px, 15%) auto;
+  background-color: var(--light);
 }
 
 .list-container {
-  min-width: 250px;
   min-height: 100vh;
   max-height: 100vh;
-  border-right: 1px solid #e0e0e0;
-  background-color: #f5f5f5;
+  min-width: 250px;
+  width: 15vw;
+  /* border-right: 1px solid var(--grey); */
+  box-shadow: -1px 0px 8px hsla(0, 0%, 0%, 0.2);
+  background-color: var(--light-grey);
   display: flex;
   flex-direction: column;
+  font-size: 1.40rem;
+  z-index: 1;
 }
 
 .new-list-container {
   justify-content: center;
   align-items: center;
-  border-top: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid var(--grey);
+  border-bottom: 1px solid var(--grey);
+  background-color: var(--light);
 }
 
-
 .create-new-list {
+  padding-left: 8px;
   display: flex;
-  justify-content: center;
+  justify-content: stretch;
   align-items: center;
   transition: 100ms background-color ease-in;
 }
 
 .create-new-list:hover {
-  background-color: #fdfdfd;
+  background-color: var(--light);
 }
 
 
@@ -73,28 +111,32 @@ a {
   width: 88%;
   padding: 10px;
   border: 0;
-  color: #0c0c0c;
+  color: var(--dark-primary);
   background-color: transparent;
   font-size: 1em;
 }
 
 .new-list-input:focus {
-  background-color: #fdfdfd;
+  background-color: var(--light);
   border: 0;
+}
+
+.new-list-input:required {
+  border: 0;
+  box-shadow: none;
 }
 
 .button-new-list {
   margin: 0;
   width: 12%;
   height: 100%;
-  text-align: center;
   padding: 0;
   border: 0;
   background-color: transparent;
-  color: #993955;
+  display: flex;
 }
 
-.button-new-list {
+.button-new-list:hover {
   cursor: pointer;
 }
 
@@ -104,12 +146,12 @@ a {
   position: relative;
 }
 
-.all-lists {
+.user-list-container {
   display: flex;
   flex-direction: column;
   position: relative;
   overflow-y: auto;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid var(--grey);
 }
 
 .list-of-lists {
@@ -119,7 +161,7 @@ a {
 }
 
 .lists-list-item {
-  padding: 12px 5px 12px 1px;
+  padding: 10px 5px 10px 7px;
   transition: 100ms background-color ease-in;
   display: flex;
   align-items: center;
@@ -127,12 +169,12 @@ a {
 }
 
 .lists-list-item:hover {
-  background-color: #fdfdfd;
+  background-color: var(--light);
   cursor: pointer;
 }
 
 .list-selected {
-  background-color: #fdfdfd;
+  background-color: var(--light);
 }
 
 .list-item-name {
@@ -144,21 +186,125 @@ a {
   display: flex;
   justify-content: center;
 }
+
 .list-icon {
-  color: #993955;
+  fill: var(--dark-primary);
+  height: 65%;
+  width: 65%;
 }
 
-.active {
-  background-color: #fdfdfd;
-  font-weight: bold;
-  color: #993955;
+.list-icon-inbox {
+  /* fill: #0072a2 !important; */
+  fill: var(--even-darker-grey) !important;
 }
 
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+.list-icon-today {
+  fill: var(--even-darker-grey) !important;
+}
+
+.list-icon-upcoming {
+  fill: #00a230 !important;
+}
+
+.new-list-icon {
+  height: 100%;
+  width: 100%;
+  padding: 4px;
+  fill: var(--dark-grey);
+  transition: fill .8s, transform .5s;
+}
+
+.new-list-icon:hover {
+  fill: var(--darker-grey);
+  transform: rotate(90deg);
+}
+
+.list-icon-circle {
+  border-radius: 100%;
+  background-color: var(--dark-grey);
+  height: 1rem;
+  width: 1rem;
+}
+
+.task-element-wrapper {
+  max-height: 100vh;
+  position: relative;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.task-list {
+  width: 98%;
+  height: 100%;
+  list-style-type: none;
+  padding: 0;
+}
+
+.task-list-item {
+  border-bottom: 1px solid var(--grey);
+}
+
+.task-list-item:hover {
+  background-color: var(--light-grey);
+}
+
+.task-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+}
+
+.task-checkbox {
+  margin-left: 1%;
+  width: 2%;
+  flex: 1;
+}
+
+.task-name {
+  font-size: 1.4rem;
+  height: 100%;
+  min-height: 50px;
+  width: 96%;
+  display: flex;
+  align-items: center;
+  margin-left: 2%;
+}
+
+.task-name:hover {
+  cursor: pointer;
+}
+
+.task-make-fav {
+  width: 2%;
+  min-width: 24px;
+  height: 100%;
+}
+
+.make-fav {
+  height: 60%;
+  width: 60%;
+  transition: transform .5s;
+}
+
+.make-fav > path {
+  fill: var(--light) !important;
+  stroke: var(--even-darker-grey) !important;
+  transition: fill .3s, stroke .3s;
+}
+
+.make-fav:hover {
+  cursor: pointer;
+  flex: 1;
+  transform: rotate(75deg);
+  transform-origin: center;
+}
+
+.make-fav:hover > path {
+  fill: var(--yellow-1) !important;
+  stroke: var(--yellow-1) !important;
 }
